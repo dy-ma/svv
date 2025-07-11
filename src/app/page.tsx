@@ -34,6 +34,13 @@ export default function Chat() {
                   return <img key={i} src={part.url} alt={part.filename} />;
                 }
                 return <pre key={i}>{part.filename}</pre>
+              case 'tool-weather':
+              case 'tool-convertFahrenheitToCelsius':
+                return (
+                  <pre key={`${message.id}-${i}`}>
+                    {JSON.stringify(part, null, 2)}
+                  </pre>
+                );
             }
           })}
         </div>
