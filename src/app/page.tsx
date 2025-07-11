@@ -4,6 +4,7 @@ import { useChat } from '@ai-sdk/react';
 import { useRef, useState } from 'react';
 import { Paperclip } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 export default function Chat() {
   const [input, setInput] = useState('');
@@ -33,16 +34,16 @@ export default function Chat() {
                   part.type === 'file' &&
                   part.mediaType?.startsWith('image/')
                 ) {
-                  return <img key={i} src={part.url} alt={part.filename} className='rounded-2xl m-1' />;
+                  return <img key={i} src={part.url} alt={part.filename} className='rounded-2xl p-1' />;
                 }
                 return <pre key={i}>{part.filename}</pre>
               case 'tool-weather':
               case 'tool-convertFahrenheitToCelsius':
-              case 'tool-reviewClaim':
+              case 'tool-submitClaim':
               case 'tool-convertCurrency':
               case 'tool-verifyCustomer':
                 return (
-                  <Card>
+                  <Card key={i}>
                     <CardHeader>
                       <CardTitle className="capitalize">{part.type}</CardTitle>
                       <CardDescription className="break-all">{part.toolCallId}</CardDescription>
@@ -89,10 +90,9 @@ export default function Chat() {
       >
         {/* File button + badge */}
         <div className="flex items-center gap-2">
-          <button
+          <Button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="relative p-2 rounded hover:bg-zinc-800 transition"
             title="Attach files"
           >
             <Paperclip />
@@ -101,7 +101,7 @@ export default function Chat() {
                 {files.length}
               </span>
             )}
-          </button>
+          </Button>
 
           {/* Hidden file input */}
           <input
